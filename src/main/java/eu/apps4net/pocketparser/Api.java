@@ -6,7 +6,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +25,7 @@ public class Api {
         return json;
     }
 
-    // Παίρνει το json string μετά την κλήση του κατάλληλου api
+    // Get the json string after calling the api
     public void getJsonString() throws Exception {
         String jsonUrl = URL + jsonQuery + "?consumer_key=" + consumerKey + "&access_token=" + accessToken;
 
@@ -37,34 +36,36 @@ public class Api {
             if (response.isSuccessful() && response.body() != null) {
                 json = response.body().string();
             } else {
-                throw new Exception("Υπάρχει πρόβλημα στην άντληση των δεδομένων");
+                throw new Exception("Problem with api call");
             }
         } catch (IOException e) {
             throw new Exception(e);
         }
     }
 
+    // Call the api and get the bookmarks
     public List<Bookmark> getBookmarks() {
         try {
             List<Bookmark> bookmarks = new ArrayList<>();
 
+            // Api call
             this.setJsonQuery("v3/get");
-            // Κάνει την κλήση στο api
             this.getJsonString();
 
-            // Μετατρέπει το json string σε object
+            // Convert string to json objects
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject json = gson.fromJson(this.getJson(), JsonObject.class);
 
-            // Διαβάζει το array του json
+            // Get the json array
             JsonObject list = json.getAsJsonObject("list");
 
+            // Convert jsonObject to jsonArray
             JsonArray jsonArray = new JsonArray();
-
             list.keySet().stream().forEach(key -> {
                 jsonArray.add(list.get(key));
             });
 
+            // Parse the bookmarks objects to Bookmark Entities
             for (JsonElement jsonBookmark : jsonArray) {
                 bookmarks.add(getBookmarkObject(jsonBookmark.getAsJsonObject()));
             }
@@ -78,6 +79,7 @@ public class Api {
     }
 
 
+    // Convert json object to Bookmark Entity
     public Bookmark getBookmarkObject(JsonObject json) {
         Bookmark bookmark = new Bookmark();
 

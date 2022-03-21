@@ -1,26 +1,32 @@
 package eu.apps4net.pocketparser;
 
-import eu.apps4net.pocketparser.model.Bookmark;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @SpringBootApplication
-public class PocketParserApplication {
+public class PocketParserApplication extends Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(PocketParserApplication.class, args);
+//        SpringApplication.run(PocketParserApplication.class, args);
 
-        List<Bookmark> bookmarks = new ArrayList<>();
-        Api api = new Api();
+        Application.launch(args);
 
-        bookmarks = api.getBookmarks();
-
-        System.out.println(bookmarks);
     }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getClassLoader().getResource("view/Main.fxml"));
 
+        Scene scene = new Scene(root, 1217, 630);
+
+        primaryStage.setTitle("Pocket Parser");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
 
 }
