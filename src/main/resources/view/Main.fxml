@@ -8,6 +8,7 @@
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="601.0" prefWidth="1189.0">
          <children>
             <Button layoutX="528.0" layoutY="34.0" mnemonicParsing="false" onAction="#fetchBookmarks" text="Get Bookmarks" />
+            <TextArea fx:id="bookmarksTextArea" layoutX="21.0" layoutY="80.0" prefHeight="507.0" prefWidth="1148.0" />
          </children>
       </Pane>
    </children>

@@ -2,6 +2,8 @@ package eu.apps4net.pocketparser;
 
 import eu.apps4net.pocketparser.model.Bookmark;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.TextArea;
 
 import java.util.List;
 
@@ -14,11 +16,17 @@ import java.util.List;
 
 public class MainController {
 
+    @FXML
+    private TextArea bookmarksTextArea;
+
     public void fetchBookmarks(ActionEvent actionEvent) {
         Api api = new Api();
 
         List<Bookmark> bookmarks = api.getBookmarks();
 
-        System.out.println(bookmarks);
+        for(Bookmark bookmark : bookmarks) {
+            bookmarksTextArea.appendText(String.valueOf(bookmark.getUrl()) + "\n");
+        }
+
     }
 }
