@@ -2,6 +2,7 @@ package eu.apps4net.pocketparser;
 
 import com.google.gson.*;
 import eu.apps4net.pocketparser.model.Bookmark;
+import eu.apps4net.pocketparser.service.PropertiesManager;
 import io.github.cdimascio.dotenv.Dotenv;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 public class Api {
     private static final String URL = "https://getpocket.com/";
@@ -69,6 +71,11 @@ public class Api {
             JsonObject json = gson.fromJson(this.getJson(), JsonObject.class);
 
             accessCode = json.get("code").getAsString();
+
+            Properties properties = new Properties();
+            PropertiesManager manager = new PropertiesManager(properties);
+            properties.setProperty("access_code", accessCode);
+            manager.saveProperties();
         }  catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -83,15 +90,17 @@ public class Api {
             this.setJsonQuery("v3/oauth/authorize" + "?consumer_key=" + consumerKey + "&code=" + accessCode);
             this.getJsonString();
 
-            System.out.println(this.getJson());
             // Convert string to json objects
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject json = gson.fromJson(this.getJson(), JsonObject.class);
 
+
             accessToken = json.get("access_token").getAsString();
 
-            System.out.println(accessToken);
-
+            Properties properties = new Properties();
+            PropertiesManager manager = new PropertiesManager(properties);
+            properties.setProperty("access_token", accessToken);
+            manager.saveProperties();
 
         }  catch (Exception e) {
             System.out.println(e.getMessage());

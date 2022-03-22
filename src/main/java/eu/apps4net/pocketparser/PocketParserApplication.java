@@ -5,16 +5,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class PocketParserApplication extends Application {
 
     public static void main(String[] args) {
-//        SpringApplication.run(PocketParserApplication.class, args);
+        SpringApplication.run(PocketParserApplication.class, args);
 
         Application.launch(args);
-
     }
 
     @Override
