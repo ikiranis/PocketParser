@@ -40,6 +40,7 @@ public class Api {
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .addHeader("Content-Type", "application/json; charset=utf-8")
+                .addHeader("X-Accept", "application/json")
                 .url(jsonUrl).build();
 
         try (Response response = client.newCall(request).execute()) {
@@ -60,8 +61,11 @@ public class Api {
             this.setJsonQuery("v3/oauth/request" + "?consumer_key=" + consumerKey + "&redirect_uri=https://apps4net.eu");
             this.getJsonString();
 
-            accessCode = this.getJson().replace("code=", "");
+            // Convert string to json objects
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = gson.fromJson(this.getJson(), JsonObject.class);
 
+            accessCode = json.get("code").getAsString();
         }  catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -81,7 +85,7 @@ public class Api {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject json = gson.fromJson(this.getJson(), JsonObject.class);
 
-            accessToken = json.getAsString();
+            accessToken = json.get("access_token").getAsString();
 
             System.out.println(accessToken);
 
