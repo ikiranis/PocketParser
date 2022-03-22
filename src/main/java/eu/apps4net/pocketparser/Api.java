@@ -16,12 +16,12 @@ public class Api {
     private String json;
     private String jsonQuery;
     private final String consumerKey;
+    private String accessCode;
     private String accessToken = "7b610ecf-5004-469a-4798-95a275";
     Dotenv dotenv = Dotenv.load();
 
     public Api() {
         this.consumerKey = dotenv.get("CONSUMER_KEY");
-        System.out.println(consumerKey);
     }
 
     public void setJsonQuery(String jsonQuery) {
@@ -33,7 +33,7 @@ public class Api {
     }
 
     // Get the json string after calling the api
-    public void getJsonString() throws Exception {
+    private void getJsonString() throws Exception {
         String jsonUrl = URL + jsonQuery + "?consumer_key=" + consumerKey + "&access_token=" + accessToken;
 
         OkHttpClient client = new OkHttpClient();
@@ -50,13 +50,30 @@ public class Api {
         }
     }
 
+    // Get the Api code for consumer_key
+    public String requestApiCode() {
+        try {
+            // Api call
+            this.setJsonQuery("v3/oauth/request" + "?consumer_key=" + consumerKey + "&redirect_uri=https://apps4net.eu");
+            this.getJsonString();
+
+            accessCode = this.getJson().replace("code=", "");
+
+
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        return "https://getpocket.com/auth/authorize?request_token=" + accessCode + "&redirect_uri=";
+    }
+
     // Call the api and get the bookmarks
     public List<Bookmark> getBookmarks() {
         try {
             List<Bookmark> bookmarks = new ArrayList<>();
 
             // Api call
-            this.setJsonQuery("v3/get");
+            this.setJsonQuery("v3/get" + "?consumer_key=" + consumerKey + "&access_token=" + accessToken);
             this.getJsonString();
 
             // Convert string to json objects
