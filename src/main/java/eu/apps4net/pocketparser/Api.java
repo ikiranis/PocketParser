@@ -2,6 +2,7 @@ package eu.apps4net.pocketparser;
 
 import com.google.gson.*;
 import eu.apps4net.pocketparser.model.Bookmark;
+import io.github.cdimascio.dotenv.Dotenv;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -14,8 +15,14 @@ public class Api {
     private static final String URL = "https://getpocket.com/";
     private String json;
     private String jsonQuery;
-    private String consumerKey = "101349-9a368bc1aed578ac661a380";
+    private final String consumerKey;
     private String accessToken = "7b610ecf-5004-469a-4798-95a275";
+    Dotenv dotenv = Dotenv.load();
+
+    public Api() {
+        this.consumerKey = dotenv.get("CONSUMER_KEY");
+        System.out.println(consumerKey);
+    }
 
     public void setJsonQuery(String jsonQuery) {
         this.jsonQuery = jsonQuery;
