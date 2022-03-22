@@ -16,8 +16,8 @@ public class Api {
     private String json;
     private String jsonQuery;
     private final String consumerKey;
-    private String accessCode;
-    private String accessToken = "7b610ecf-5004-469a-4798-95a275";
+    private static String accessCode;
+    private static String accessToken;
     Dotenv dotenv = Dotenv.load();
 
     public Api() {
@@ -34,10 +34,13 @@ public class Api {
 
     // Get the json string after calling the api
     private void getJsonString() throws Exception {
-        String jsonUrl = URL + jsonQuery + "?consumer_key=" + consumerKey + "&access_token=" + accessToken;
+        String jsonUrl = URL + jsonQuery;
+        System.out.println(jsonUrl);
 
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(jsonUrl).build();
+        Request request = new Request.Builder()
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .url(jsonUrl).build();
 
         try (Response response = client.newCall(request).execute()) {
             if (response.isSuccessful() && response.body() != null) {
@@ -59,12 +62,33 @@ public class Api {
 
             accessCode = this.getJson().replace("code=", "");
 
-
         }  catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        return "https://getpocket.com/auth/authorize?request_token=" + accessCode + "&redirect_uri=";
+        return "https://getpocket.com/auth/authorize?request_token=" + accessCode + "&redirect_uri=https://apps4net.eu";
+    }
+
+    public void getAccessToken() {
+        try {
+            System.out.println("v3/oauth/authorize" + "?consumer_key=" + consumerKey + "&code=" + accessCode);
+            // Api call
+            this.setJsonQuery("v3/oauth/authorize" + "?consumer_key=" + consumerKey + "&code=" + accessCode);
+            this.getJsonString();
+
+            System.out.println(this.getJson());
+            // Convert string to json objects
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonObject json = gson.fromJson(this.getJson(), JsonObject.class);
+
+            accessToken = json.getAsString();
+
+            System.out.println(accessToken);
+
+
+        }  catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     // Call the api and get the bookmarks

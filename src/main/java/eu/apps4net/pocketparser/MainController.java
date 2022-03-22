@@ -58,4 +58,10 @@ public class MainController {
             }
         });
     }
+
+    public void getAccessToken(ActionEvent actionEvent) {
+        Api api = new Api();
+
+        api.getAccessToken();
+    }
 }
