@@ -6,6 +6,9 @@ import io.github.cdimascio.dotenv.Dotenv;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +18,7 @@ public class Api {
     private static final String URL = "https://getpocket.com/";
     private String json;
     private String jsonQuery;
-    private final String consumerKey;
+    private static String consumerKey;
     private static String accessCode;
     private static String accessToken;
     Dotenv dotenv = Dotenv.load();
