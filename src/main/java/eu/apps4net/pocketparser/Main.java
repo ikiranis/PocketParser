@@ -6,12 +6,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class PocketParserApplication extends Application {
+
+/**
+ * Created by Yiannis Kiranis <yiannis.kiranis@gmail.com>
+ * https://apps4net.eu
+ * Date: 23/3/22
+ * Time: 10:08 μ.μ.
+ */
+
+public class Main extends Application {
 
     public static void main(String[] args) {
-//        SpringApplication.run(PocketParserApplication.class, args);
-
-        Application.launch(args);
+        System.out.println("gfdfgdsf");
+        launch();
     }
 
     @Override
@@ -24,5 +31,4 @@ public class PocketParserApplication extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 }
