@@ -12,7 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class PocketParserApplication extends Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(PocketParserApplication.class, args);
+//        SpringApplication.run(PocketParserApplication.class, args);
 
         Application.launch(args);
     }

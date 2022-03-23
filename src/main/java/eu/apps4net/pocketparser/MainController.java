@@ -32,7 +32,7 @@ public class MainController {
         List<Bookmark> bookmarks = api.getBookmarks();
 
         for(Bookmark bookmark : bookmarks) {
-            bookmarksTextArea.appendText(String.valueOf(bookmark.getUrl()) + "\n");
+            bookmarksTextArea.appendText(bookmark.getUrl() + "\n");
         }
 
     }
@@ -42,18 +42,20 @@ public class MainController {
 
         String url = api.requestApiCode();
 
-        urlText.setText("Press Here!");
+        urlText.setText("Request authentication!");
 
         // Open url on browser
         urlText.setOnAction(t -> {
+            System.out.println("URL--> " + url);
             Desktop desktop = Desktop.getDesktop();
+            System.out.println(desktop);
             if (desktop.isSupported(Desktop.Action.BROWSE)){
                 try {
                     desktop.browse(new URI(url));
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println(e);
                 } catch (URISyntaxException e) {
-                    e.printStackTrace();
+                    System.out.println(e + "url: " + url);
                 }
             }
         });

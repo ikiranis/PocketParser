@@ -11,24 +11,36 @@ import java.util.Properties;
  * https://apps4net.eu
  * Date: 22/3/22
  * Time: 8:27 μ.μ.
+ *
+ * Save and load properties in file
+ *
  */
 
-public class PropertiesManager {
+public class PropertiesService {
     private static final File file = new File("property.dat");
-    private Properties properties;
+    private Properties properties = new Properties();
 
-    public PropertiesManager(Properties properties) {
-        this.properties = properties;
+    public void setProperty(String name, String value) {
+        try {
+            load();
+            properties.setProperty(name, value);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void saveProperties() throws IOException
+    public String getProperty(String name) {
+        return properties.getProperty(name);
+    }
+
+    public void save() throws IOException
     {
         FileOutputStream fr = new FileOutputStream(file);
         properties.store(fr, "Properties");
         fr.close();
     }
 
-    public void loadProperties() throws IOException
+    public void load() throws IOException
     {
         FileInputStream fi=new FileInputStream(file);
         properties.load(fi);

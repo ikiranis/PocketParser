@@ -2,14 +2,11 @@ package eu.apps4net.pocketparser;
 
 import com.google.gson.*;
 import eu.apps4net.pocketparser.model.Bookmark;
-import eu.apps4net.pocketparser.service.PropertiesManager;
+import eu.apps4net.pocketparser.service.PropertiesService;
 import io.github.cdimascio.dotenv.Dotenv;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -72,10 +69,9 @@ public class Api {
 
             accessCode = json.get("code").getAsString();
 
-            Properties properties = new Properties();
-            PropertiesManager manager = new PropertiesManager(properties);
+            PropertiesService properties = new PropertiesService();
             properties.setProperty("access_code", accessCode);
-            manager.saveProperties();
+            properties.save();
         }  catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -85,6 +81,8 @@ public class Api {
 
     public void getAccessToken() {
         try {
+            PropertiesService properties = new PropertiesService();
+
             System.out.println("v3/oauth/authorize" + "?consumer_key=" + consumerKey + "&code=" + accessCode);
             // Api call
             this.setJsonQuery("v3/oauth/authorize" + "?consumer_key=" + consumerKey + "&code=" + accessCode);
@@ -94,13 +92,12 @@ public class Api {
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
             JsonObject json = gson.fromJson(this.getJson(), JsonObject.class);
 
-
+            System.out.println(json);
             accessToken = json.get("access_token").getAsString();
 
-            Properties properties = new Properties();
-            PropertiesManager manager = new PropertiesManager(properties);
+            System.out.println(accessToken);
             properties.setProperty("access_token", accessToken);
-            manager.saveProperties();
+            properties.save();
 
         }  catch (Exception e) {
             System.out.println(e.getMessage());
@@ -110,10 +107,13 @@ public class Api {
     // Call the api and get the bookmarks
     public List<Bookmark> getBookmarks() {
         try {
+            PropertiesService properties = new PropertiesService();
+            properties.load();
+
             List<Bookmark> bookmarks = new ArrayList<>();
 
             // Api call
-            this.setJsonQuery("v3/get" + "?consumer_key=" + consumerKey + "&access_token=" + accessToken);
+            this.setJsonQuery("v3/get" + "?consumer_key=" + consumerKey + "&access_token=" + properties.getProperty("access_token"));
             this.getJsonString();
 
             // Convert string to json objects
