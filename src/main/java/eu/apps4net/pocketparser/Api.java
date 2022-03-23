@@ -11,7 +11,6 @@ import okhttp3.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 
 public class Api {
     private static final String URL = "https://getpocket.com/";
