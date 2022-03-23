@@ -4,6 +4,7 @@ import eu.apps4net.pocketparser.Api;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.web.WebView;
 
 import java.awt.*;
 import java.io.IOException;
@@ -14,6 +15,9 @@ public class AuthController {
 
     @FXML
     private Hyperlink urlText;
+
+    @FXML
+    private WebView web;
 
     public void authenticate(ActionEvent actionEvent) {
         Api api = new Api();
@@ -40,8 +44,13 @@ public class AuthController {
     }
 
     public void getAccessToken(ActionEvent actionEvent) {
-        Api api = new Api();
 
-        api.getAccessToken();
+//        WebEngine webEngine = web.getEngine();
+//
+//        webEngine.load("http://google.com");
+
+//        Api api = new Api();
+//
+//        api.getAccessToken();
     }
 }
