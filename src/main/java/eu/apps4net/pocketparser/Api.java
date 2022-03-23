@@ -79,11 +79,11 @@ public class Api {
         return "https://getpocket.com/auth/authorize?request_token=" + accessCode + "&redirect_uri=https://apps4net.eu";
     }
 
+    // Get the final access token
     public void getAccessToken() {
         try {
             PropertiesService properties = new PropertiesService();
 
-            System.out.println("v3/oauth/authorize" + "?consumer_key=" + consumerKey + "&code=" + accessCode);
             // Api call
             this.setJsonQuery("v3/oauth/authorize" + "?consumer_key=" + consumerKey + "&code=" + accessCode);
             this.getJsonString();
