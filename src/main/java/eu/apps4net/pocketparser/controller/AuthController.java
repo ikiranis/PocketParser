@@ -4,6 +4,7 @@ import eu.apps4net.pocketparser.Api;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import java.awt.*;
@@ -28,29 +29,28 @@ public class AuthController {
 
         // Open url on browser
         urlText.setOnAction(t -> {
-            System.out.println("URL--> " + url);
-            Desktop desktop = Desktop.getDesktop();
-            System.out.println(desktop);
-            if (desktop.isSupported(Desktop.Action.BROWSE)){
-                try {
-                    desktop.browse(new URI(url));
-                } catch (IOException e) {
-                    System.out.println(e);
-                } catch (URISyntaxException e) {
-                    System.out.println(e + "url: " + url);
-                }
-            }
+
+            WebEngine webEngine = web.getEngine();
+            webEngine.load(url);
+
+
+//            Desktop desktop = Desktop.getDesktop();
+//            System.out.println(desktop);
+//            if (desktop.isSupported(Desktop.Action.BROWSE)){
+//                try {
+//                    desktop.browse(new URI(url));
+//                } catch (IOException e) {
+//                    System.out.println(e);
+//                } catch (URISyntaxException e) {
+//                    System.out.println(e + "url: " + url);
+//                }
+//            }
         });
     }
 
     public void getAccessToken(ActionEvent actionEvent) {
+        Api api = new Api();
 
-//        WebEngine webEngine = web.getEngine();
-//
-//        webEngine.load("http://google.com");
-
-//        Api api = new Api();
-//
-//        api.getAccessToken();
+        api.getAccessToken();
     }
 }
