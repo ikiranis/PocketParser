@@ -40,7 +40,7 @@ public class MainController {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(Main.class.getResource("Auth.fxml"));
 
-        Scene scene = new Scene(root, 508, 491);
+        Scene scene = new Scene(root, 1148, 592);
 
         stage.setTitle("Grant Access");
         stage.setScene(scene);
