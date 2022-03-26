@@ -1,16 +1,11 @@
-package eu.apps4net.pocketparser.controller;
+package eu.apps4net.controller;
 
-import eu.apps4net.pocketparser.Api;
+import eu.apps4net.Api;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 
 public class AuthController {
 

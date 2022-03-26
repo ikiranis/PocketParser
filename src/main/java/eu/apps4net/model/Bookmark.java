@@ -1,4 +1,4 @@
-package eu.apps4net.pocketparser.model;
+package eu.apps4net.model;
 
 /**
  * Created by Yiannis Kiranis <yiannis.kiranis@gmail.com>

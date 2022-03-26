@@ -1,8 +1,8 @@
-package eu.apps4net.pocketparser;
+package eu.apps4net;
 
 import com.google.gson.*;
-import eu.apps4net.pocketparser.model.Bookmark;
-import eu.apps4net.pocketparser.service.PropertiesService;
+import eu.apps4net.model.Bookmark;
+import eu.apps4net.service.PropertiesService;
 import io.github.cdimascio.dotenv.Dotenv;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

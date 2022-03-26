@@ -1,4 +1,4 @@
-package eu.apps4net.pocketparser.service;
+package eu.apps4net.service;
 
 import java.io.File;
 import java.io.FileInputStream;
