@@ -9,8 +9,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
+import java.net.JarURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Api {
     private static final String URL = "https://getpocket.com/";
@@ -19,10 +23,30 @@ public class Api {
     private static String consumerKey;
     private static String accessCode;
     private static String accessToken;
-    Dotenv dotenv = Dotenv.load();
+    Dotenv dotenv;
 
     public Api() {
-        this.consumerKey = dotenv.get("CONSUMER_KEY");
+
+        // Find if app is running in jar or not
+        try {
+            java.net.URL url = this.getClass().getClassLoader().getResource(".env");
+            URLConnection urlConnection = url.openConnection();
+
+            // Get dotenv file
+            if (urlConnection instanceof JarURLConnection) {
+                // Running in jar
+                dotenv = Dotenv.load();
+            } else {
+                // Running on IDE
+                dotenv = Dotenv.configure()
+                        .directory(this.getClass().getClassLoader().getResource(".env").toString()).load();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        consumerKey = dotenv.get("CONSUMER_KEY");
     }
 
     public void setJsonQuery(String jsonQuery) {
