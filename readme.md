@@ -1,4 +1,4 @@
-# Pocker parser
+# Pocket parser
 
 This app is using the Pocket's [API](https://getpocket.com/developer/docs/overview) to retrieve all the
 bookmarks and parse only the urls. Then you can delete all from Pocket.
