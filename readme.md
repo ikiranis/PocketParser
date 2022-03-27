@@ -20,4 +20,13 @@ Then you must copy .env.sample to .env file and edit this with the consumer key.
 
 The compiled version (you can download it), already has the consumer key and you don't have to do anything.
 
+### Running (temporary)
+
+You can run the first released version of jar file. In the first time, you must choose "Get Access" to 
+grant access from Pocket.
+After that (every time you run the app) you will choose only "Get Bookmarks" or "Delete Bookmarks" 
+(after getting the bookmarks). 
+
+This is the first version. Needs more work in interface (make things more automated) and improve the code
+to make or the security checks and validations.
 
