@@ -5,6 +5,8 @@ bookmarks and parse only the urls. Then you can delete all from Pocket.
 
 **The app is still in development**
 
+![2022-03-28_00-49](https://user-images.githubusercontent.com/50238022/160302684-a41bb5d8-f18e-475d-af0f-9417d7b3b6b7.png)
+
 ### How it works
 
 1. Uses the OAuth 2.0 for [authentication](https://getpocket.com/developer/docs/authentication)
