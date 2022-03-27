@@ -28,5 +28,5 @@ After that (every time you run the app) you will choose only "Get Bookmarks" or 
 (after getting the bookmarks). 
 
 This is the first version. Needs more work in interface (make things more automated) and improve the code
-to make or the security checks and validations.
+to make the security checks and validations.
 
