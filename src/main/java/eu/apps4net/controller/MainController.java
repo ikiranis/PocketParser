@@ -12,6 +12,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,13 +23,14 @@ import java.util.List;
  */
 
 public class MainController {
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     @FXML
     private TextArea bookmarksTextArea;
 
-    public void fetchBookmarks(ActionEvent actionEvent) {
+    public void fetchBookmarks(ActionEvent event) {
         Api api = new Api();
-        List<Bookmark> bookmarks = api.getBookmarks();
+        bookmarks = api.getBookmarks();
 
         for(Bookmark bookmark : bookmarks) {
             bookmarksTextArea.appendText(bookmark.getUrl() + "\n");
@@ -36,7 +38,7 @@ public class MainController {
     }
 
 //    @FXML
-    public void getAccess(ActionEvent actionEvent) throws IOException {
+    public void getAccess(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(Main.class.getResource("Auth.fxml"));
 
@@ -47,4 +49,8 @@ public class MainController {
         stage.show();
     }
 
+    public void deleteBookmarks(ActionEvent event) {
+        Api api = new Api();
+        api.deleteBookmarks(bookmarks);
+    }
 }

@@ -45,10 +45,11 @@ public class Api {
                 .url(jsonUrl).build();
 
         try (Response response = client.newCall(request).execute()) {
+            System.out.println(response);
             if (response.isSuccessful() && response.body() != null) {
                 json = response.body().string();
             } else {
-                throw new Exception("Problem with api call");
+                throw new Exception("Problem with api call" + response.code());
             }
         } catch (IOException e) {
             throw new Exception(e);
@@ -154,5 +155,43 @@ public class Api {
         return bookmark;
     }
 
+    // Get bookmark in JSON form
+    private JsonObject getJSONBookmark(Bookmark bookmark) {
+        JsonObject jsonBookmark = new JsonObject();
+        jsonBookmark.addProperty("action","delete");
+        jsonBookmark.addProperty("item_id", bookmark.getId());
+
+        return jsonBookmark;
+    }
+
+    // Delete the bookmarks in Pocket
+    public void deleteBookmarks(List<Bookmark> bookmarks) {
+        if (bookmarks.isEmpty()) {
+            return;
+        }
+
+        JsonArray array = new JsonArray();
+
+        // Create json array with bookmarks to delete
+        for(Bookmark bookmark : bookmarks) {
+            array.add(getJSONBookmark(bookmark));
+        }
+
+        // Api call
+        try {
+            PropertiesService properties = new PropertiesService();
+            properties.load();
+
+            this.setJsonQuery("v3/send" + "?actions=" + array
+                    + "&access_token=" + properties.getProperty("access_token")
+                    + "&consumer_key=" + consumerKey);
+            this.getJsonString();
+
+            System.out.println(json);
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
 }

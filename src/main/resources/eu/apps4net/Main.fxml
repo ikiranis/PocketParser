@@ -3,13 +3,14 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="630.0" prefWidth="1217.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.apps4net.controller.MainController">
+<AnchorPane prefHeight="630.0" prefWidth="1217.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="eu.apps4net.controller.MainController">
    <children>
       <Pane layoutX="14.0" layoutY="14.0" prefHeight="601.0" prefWidth="1189.0">
          <children>
             <Button layoutX="580.0" layoutY="14.0" mnemonicParsing="false" onAction="#fetchBookmarks" text="Get Bookmarks" />
             <TextArea fx:id="bookmarksTextArea" layoutX="21.0" layoutY="80.0" prefHeight="507.0" prefWidth="1148.0" />
             <Button layoutX="391.0" layoutY="14.0" mnemonicParsing="false" onAction="#getAccess" text="Get Access" />
+            <Button layoutX="793.0" layoutY="14.0" mnemonicParsing="false" onAction="#deleteBookmarks" text="Delete bookmarks" />
 
          </children>
       </Pane>
