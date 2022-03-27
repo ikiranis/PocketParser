@@ -14,7 +14,7 @@ bookmarks and parse only the urls. Then you can delete all from Pocket.
 
 ### Technical info
 
-The code is written in Java 1.8, JavaFX and it is a Maven Project. If you want to compile it, you have
+The code is written in Java 15, JavaFX and it is a Maven Project. If you want to compile it, you have
 to get the [consumer key](https://getpocket.com/developer/apps/new) from Pocket. 
 Then you must copy .env.sample to .env file and edit this with the consumer key. 
 
