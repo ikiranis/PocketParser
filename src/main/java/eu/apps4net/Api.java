@@ -10,11 +10,9 @@ import okhttp3.Response;
 
 import java.io.IOException;
 import java.net.JarURLConnection;
-import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Api {
     private static final String URL = "https://getpocket.com/";
@@ -73,7 +71,11 @@ public class Api {
             if (response.isSuccessful() && response.body() != null) {
                 json = response.body().string();
             } else {
-                throw new Exception("Problem with api call" + response.code());
+                if (response.code() == 401) {
+                    throw new Exception("User is not authenticated" + response.code());
+                } else {
+                    throw new Exception("Problem with api call" + response.code());
+                }
             }
         } catch (IOException e) {
             throw new Exception(e);
@@ -137,8 +139,10 @@ public class Api {
             List<Bookmark> bookmarks = new ArrayList<>();
 
             // Api call
-            this.setJsonQuery("v3/get" + "?consumer_key=" + consumerKey + "&access_token=" + properties.getProperty("access_token"));
-            this.getJsonString();
+            this.setJsonQuery("v3/get" + "?consumer_key=" + consumerKey
+                    + "&access_token=" + properties.getProperty("access_token")
+                    + "&detailType=" + "simple");
+            getJsonString();
 
             // Convert string to json objects
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -216,6 +220,28 @@ public class Api {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    public Boolean testAuthenticated() {
+        try {
+            PropertiesService properties = new PropertiesService();
+            properties.load();
+
+            List<Bookmark> bookmarks = new ArrayList<>();
+
+            // Api call
+            this.setJsonQuery("v3/get" + "?consumer_key=" + consumerKey
+                    + "&access_token=" + properties.getProperty("access_token")
+                    + "&count=" + "1");
+            getJsonString();
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+
+            return false;
+        }
+
+        return true;
     }
 
 }

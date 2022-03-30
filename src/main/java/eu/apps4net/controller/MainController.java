@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
@@ -27,6 +28,19 @@ public class MainController {
 
     @FXML
     private TextArea bookmarksTextArea;
+
+    @FXML
+    private Button accessButton;
+
+    @FXML
+    protected void initialize() {
+        Api api = new Api();
+        Boolean authenticated = api.testAuthenticated();
+
+        if (authenticated) {
+            accessButton.setVisible(false);
+        }
+    }
 
     public void fetchBookmarks(ActionEvent event) {
         Api api = new Api();
