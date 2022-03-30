@@ -58,12 +58,12 @@ public class MainController {
             for(Bookmark bookmark : bookmarks) {
                 bookmarksTextArea.appendText(bookmark.getUrl() + "\n");
             }
+        } else {
+            bookmarksTextArea.clear();
+
+            Alert alert = new Alert(Alert.AlertType.NONE, "Bookmarks not found", ButtonType.APPLY);
+            alert.show();
         }
-
-        bookmarksTextArea.clear();
-
-        Alert alert = new Alert(Alert.AlertType.NONE, "Bookmarks not found", ButtonType.APPLY);
-        alert.show();
     }
 
     // Initiate the authentication sequence when button is pressed
@@ -84,6 +84,11 @@ public class MainController {
     // Delete the bookmarks when button is pressed
     public void deleteBookmarks(ActionEvent event) {
         api.deleteBookmarks(bookmarks);
+
+        deleteButton.setVisible(false);
+        bookmarksTextArea.clear();
+        Alert alert = new Alert(Alert.AlertType.NONE, "Bookmarks deleted!", ButtonType.APPLY);
+        alert.show();
     }
 
     // Trigger when authenticated is completed
