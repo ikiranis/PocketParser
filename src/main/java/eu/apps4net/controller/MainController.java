@@ -3,9 +3,13 @@ package eu.apps4net.controller;
 import eu.apps4net.Api;
 import eu.apps4net.Main;
 import eu.apps4net.model.Bookmark;
+import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -48,22 +52,39 @@ public class MainController {
 
     // Get the bookmarks from Pocket when button is pressed
     public void fetchBookmarks(ActionEvent event) {
-        bookmarks = api.getBookmarks();
+        Scene scene = fetchButton.getScene();
+        scene.setCursor(Cursor.WAIT);
 
-        if(!bookmarks.isEmpty()) {
-            deleteButton.setVisible(true);
+        // Run service in thread
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() {
+                bookmarks = api.getBookmarks();
 
-            bookmarksTextArea.clear();
-
-            for(Bookmark bookmark : bookmarks) {
-                bookmarksTextArea.appendText(bookmark.getUrl() + "\n");
+                return null ;
             }
-        } else {
-            bookmarksTextArea.clear();
+        };
 
-            Alert alert = new Alert(Alert.AlertType.NONE, "Bookmarks not found", ButtonType.APPLY);
-            alert.show();
-        }
+        task.setOnSucceeded(e -> {
+            scene.setCursor(Cursor.DEFAULT);
+
+            if(!bookmarks.isEmpty()) {
+                deleteButton.setVisible(true);
+
+                bookmarksTextArea.clear();
+
+                for(Bookmark bookmark : bookmarks) {
+                    bookmarksTextArea.appendText(bookmark.getUrl() + "\n");
+                }
+            } else {
+                bookmarksTextArea.clear();
+
+                Alert alert = new Alert(Alert.AlertType.NONE, "Bookmarks not found", ButtonType.APPLY);
+                alert.show();
+            }
+        });
+
+        new Thread(task).start();
     }
 
     // Initiate the authentication sequence when button is pressed
@@ -83,12 +104,29 @@ public class MainController {
 
     // Delete the bookmarks when button is pressed
     public void deleteBookmarks(ActionEvent event) {
-        api.deleteBookmarks(bookmarks);
+        Scene scene = fetchButton.getScene();
+        scene.setCursor(Cursor.WAIT);
 
-        deleteButton.setVisible(false);
-        bookmarksTextArea.clear();
-        Alert alert = new Alert(Alert.AlertType.NONE, "Bookmarks deleted!", ButtonType.APPLY);
-        alert.show();
+        // Run service in thread
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() {
+                api.deleteBookmarks(bookmarks);
+
+                return null;
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            scene.setCursor(Cursor.DEFAULT);
+
+            deleteButton.setVisible(false);
+            bookmarksTextArea.clear();
+            Alert alert = new Alert(Alert.AlertType.NONE, "Bookmarks deleted!", ButtonType.APPLY);
+            alert.show();
+        });
+
+        new Thread(task).start();
     }
 
     // Trigger when authenticated is completed
