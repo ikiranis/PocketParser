@@ -33,14 +33,16 @@ public class MainController {
     private TextArea bookmarksTextArea;
 
     @FXML
-    private Button accessButton, deleteButton;
+    private Button accessButton, deleteButton, fetchButton;
 
     @FXML
     protected void initialize() {
         deleteButton.setVisible(false);
+        fetchButton.setVisible(false);
 
         if (api.testAuthenticated()) {
             accessButton.setVisible(false);
+            fetchButton.setVisible(true);
         }
     }
 
@@ -86,6 +88,7 @@ public class MainController {
 
     // Trigger when authenticated is completed
     public void authenticatedIsOk() {
+        fetchButton.setVisible(true);
         accessButton.setVisible(false);
     }
 }
