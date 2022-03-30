@@ -77,6 +77,12 @@ public class Api {
                     throw new Exception("Problem with api call" + response.code());
                 }
             }
+
+            if (response.isSuccessful() && response.body() == null) {
+                System.out.println("empty bookmarks");
+                throw new Exception("Bookmarks not found!");
+            }
+
         } catch (IOException e) {
             throw new Exception(e);
         }
@@ -137,6 +143,7 @@ public class Api {
             properties.load();
 
             List<Bookmark> bookmarks = new ArrayList<>();
+            JsonObject list;
 
             // Api call
             this.setJsonQuery("v3/get" + "?consumer_key=" + consumerKey
@@ -146,10 +153,14 @@ public class Api {
 
             // Convert string to json objects
             Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            JsonObject json = gson.fromJson(this.getJson(), JsonObject.class);
+            JsonObject json = gson.fromJson(getJson(), JsonObject.class);
 
             // Get the json array
-            JsonObject list = json.getAsJsonObject("list");
+            try {
+                list = json.getAsJsonObject("list");
+            } catch (Exception e) {
+                return bookmarks;
+            }
 
             // Convert jsonObject to jsonArray
             JsonArray jsonArray = new JsonArray();

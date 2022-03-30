@@ -8,7 +8,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
@@ -48,13 +50,18 @@ public class MainController {
 
         if(!bookmarks.isEmpty()) {
             deleteButton.setVisible(true);
+
+            bookmarksTextArea.clear();
+
+            for(Bookmark bookmark : bookmarks) {
+                bookmarksTextArea.appendText(bookmark.getUrl() + "\n");
+            }
         }
 
         bookmarksTextArea.clear();
 
-        for(Bookmark bookmark : bookmarks) {
-            bookmarksTextArea.appendText(bookmark.getUrl() + "\n");
-        }
+        Alert alert = new Alert(Alert.AlertType.NONE, "Bookmarks not found", ButtonType.APPLY);
+        alert.show();
     }
 
     // Initiate the authentication sequence when button is pressed
