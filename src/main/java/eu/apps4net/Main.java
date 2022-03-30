@@ -23,6 +23,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         scene = new Scene(loadFXML("Main"), 1217, 630);
+        stage.setTitle("Pocket Parser");
         stage.setScene(scene);
         stage.show();
     }

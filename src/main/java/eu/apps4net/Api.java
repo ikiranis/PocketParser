@@ -72,7 +72,7 @@ public class Api {
                 json = response.body().string();
             } else {
                 if (response.code() == 401) {
-                    throw new Exception("User is not authenticated" + response.code());
+                    throw new Exception("User is not authenticated. Code: " + response.code());
                 } else {
                     throw new Exception("Problem with api call" + response.code());
                 }

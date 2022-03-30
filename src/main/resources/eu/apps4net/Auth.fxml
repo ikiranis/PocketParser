@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
@@ -8,7 +7,6 @@
    <children>
       <Pane layoutX="8.0" layoutY="4.0" prefHeight="582.0" prefWidth="1133.0">
          <children>
-
             <WebView fx:id="web" layoutX="4.0" layoutY="4.0" prefHeight="574.0" prefWidth="1125.0" />
          </children>
       </Pane>

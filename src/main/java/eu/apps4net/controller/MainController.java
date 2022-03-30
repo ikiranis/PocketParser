@@ -25,46 +25,60 @@ import java.util.List;
 
 public class MainController {
     private List<Bookmark> bookmarks = new ArrayList<>();
+    private Api api = new Api();
 
     @FXML
     private TextArea bookmarksTextArea;
 
     @FXML
-    private Button accessButton;
+    private Button accessButton, deleteButton;
 
     @FXML
     protected void initialize() {
-        Api api = new Api();
-        Boolean authenticated = api.testAuthenticated();
+        deleteButton.setVisible(false);
 
-        if (authenticated) {
+        if (api.testAuthenticated()) {
             accessButton.setVisible(false);
         }
     }
 
+    // Get the bookmarks from Pocket when button is pressed
     public void fetchBookmarks(ActionEvent event) {
-        Api api = new Api();
         bookmarks = api.getBookmarks();
+
+        if(!bookmarks.isEmpty()) {
+            deleteButton.setVisible(true);
+        }
+
+        bookmarksTextArea.clear();
 
         for(Bookmark bookmark : bookmarks) {
             bookmarksTextArea.appendText(bookmark.getUrl() + "\n");
         }
     }
 
-//    @FXML
+    // Initiate the authentication sequence when button is pressed
+    // Opening new window
     public void getAccess(ActionEvent event) throws IOException {
         Stage stage = new Stage();
         Parent root = FXMLLoader.load(Main.class.getResource("Auth.fxml"));
 
         Scene scene = new Scene(root, 1148, 592);
 
+        AuthController.mainController = this;
+
         stage.setTitle("Grant Access");
         stage.setScene(scene);
         stage.show();
     }
 
+    // Delete the bookmarks when button is pressed
     public void deleteBookmarks(ActionEvent event) {
-        Api api = new Api();
         api.deleteBookmarks(bookmarks);
+    }
+
+    // Trigger when authenticated is completed
+    public void authenticatedIsOk() {
+        accessButton.setVisible(false);
     }
 }
