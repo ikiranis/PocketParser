@@ -185,11 +185,11 @@ public class Api {
     // Convert json object to Bookmark Entity
     public Bookmark getBookmarkObject(JsonObject json) {
         Bookmark bookmark = new Bookmark();
-
         bookmark.setId(json.get("item_id").getAsLong());
         bookmark.setUrl(json.get("given_url").getAsString());
         bookmark.setTittle(json.get("given_title").getAsString());
-        bookmark.setDescription(json.get("excerpt").getAsString());
+        bookmark.setDescription("");
+//        bookmark.setDescription(json.get("excerpt").getAsString());
 
         return bookmark;
     }
