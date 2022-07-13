@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.apps4net</groupId>
     <artifactId>PocketParser</artifactId>
-    <version>0.0.2</version>
+    <version>0.0.3</version>
     <name>PocketParser</name>
     <description>PocketParser</description>
     <properties>
