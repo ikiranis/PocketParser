@@ -22,7 +22,7 @@ The compiled version (you can download it), already has the consumer key and you
 
 ### Running
 
-You can run the second released version of jar file. In the first time, you must choose "Get Access" to 
+You can run the third released version of jar file. In the first time, you must choose "Get Access" to 
 grant access from Pocket.
 After that (every time you run the app) you will choose only "Get Bookmarks" or "Delete Bookmarks" 
 (after getting the bookmarks). 
